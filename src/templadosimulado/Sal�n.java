@@ -17,7 +17,7 @@ public class Salón {
     private boolean auditorio;
     private boolean computadores;
     
-    public Salón(int piso, int aula, int capacidad, boolean audotorio, boolean computadores){
+    public Salón(int piso, int aula, int capacidad, boolean auditorio, boolean computadores){
         setPiso(piso);
         setAula(aula);
         setCapacidad(capacidad);

@@ -209,6 +209,7 @@ public class TempladoSimulado {
                 horariosLunes[i][4]= new Horario("Lunes",16,18,edificio.get(i));
                 horariosLunes[i][5]= new Horario("Lunes",18,20,edificio.get(i));
                 
+                horariosMartes[i][0]= new Horario("Martes",7,9,edificio.get(i));
                 horariosMartes[i][1]= new Horario("Martes",9,11,edificio.get(i));
                 horariosMartes[i][2]= new Horario("Martes",11,13,edificio.get(i));
                 horariosMartes[i][3]= new Horario("Martes",14,16,edificio.get(i));
@@ -236,6 +237,7 @@ public class TempladoSimulado {
                 horariosViernes[i][4]= new Horario("Viernes",16,18,edificio.get(i));
                 horariosViernes[i][5]= new Horario("Viernes",18,20,edificio.get(i));
         }
+        /*
          horariosLunes[0][0].setCurso(cursos.get(0));
          horariosLunes[0][0].setSalon(edificio.get(1));
          horariosLunes[1][0].setCurso(cursos.get(1));
@@ -248,6 +250,7 @@ public class TempladoSimulado {
          horariosLunes[4][0].setSalon(edificio.get(2));
          horariosLunes[5][0].setCurso(cursos.get(5));
          horariosLunes[5][0].setSalon(edificio.get(3));
+                */
     }
     
     public static void imprimirHorarios(){
@@ -264,13 +267,10 @@ public class TempladoSimulado {
     public static int Normal(double Media, double DStd) {
         double Suma = 0;
         for (int i = 1; i <= 12; i++) {
-            //r obtiene el valor pseudo aleatorio
             double r = Math.random();
-            Suma = Suma + r;//Suma acumula el valor de los valores aleatorios
+            Suma = Suma + r;
         }
-        //x obtiene el valor del algoritmo del libro del ing Carlos Ernesto Garcia
         double x = DStd * (Suma - 6) + Media;
-        System.out.println(x);
-        return (int)x;//se retorna x
+        return (int)x;
     }
 }
