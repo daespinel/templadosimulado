@@ -8,7 +8,7 @@ package templadosimulado;
  *
  * @author DAVID
  */
-public class Salón {
+public class Salon {
     
     private int piso;
     private int aula;
@@ -17,7 +17,7 @@ public class Salón {
     private boolean auditorio;
     private boolean computadores;
     
-    public Salón(int piso, int aula, int capacidad, boolean auditorio, boolean computadores){
+    public Salon(int piso, int aula, int capacidad, boolean auditorio, boolean computadores){
         setPiso(piso);
         setAula(aula);
         setCapacidad(capacidad);
@@ -122,7 +122,6 @@ public class Salón {
         mensaje=mensaje.concat(nombre);
         mensaje=mensaje.concat(", Capacidad: ");
         mensaje=mensaje.concat(Integer.toString(capacidad));
-        
         return mensaje;
         
     }

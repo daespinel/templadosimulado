@@ -12,7 +12,7 @@ public class Horario {
     private String dia;
     private int horaI;
     private int horaF;
-    private Salón salon;
+    private Salon salon;
     private Curso curso;
     
     public Horario(String dia,int horaI,int horaF){
@@ -20,7 +20,7 @@ public class Horario {
         setHoraI(horaI);
         setHoraF(horaF);
     }
-    public Horario(String dia,int horaI,int horaF,Salón salon){
+    public Horario(String dia,int horaI,int horaF,Salon salon){
         setDia(dia);
         setHoraI(horaI);
         setHoraF(horaF);
@@ -31,14 +31,14 @@ public class Horario {
     /**
      * @return the salon
      */
-    public Salón getSalon() {
+    public Salon getSalon() {
         return salon;
     }
 
     /**
      * @param salon the salon to set
      */
-    public void setSalon(Salón salon) {
+    public void setSalon(Salon salon) {
         this.salon = salon;
     }
 
@@ -100,11 +100,12 @@ public class Horario {
     
     @Override
     public String toString(){
-        String mensaje="Hora inicial: ";
+        
+        String mensaje="Horario: ";
         mensaje=mensaje.concat(Integer.toString(horaI));
-        mensaje=mensaje.concat(", Hora Final: ");
+        mensaje=mensaje.concat(",- ");
         mensaje=mensaje.concat(Integer.toString(horaF));
-        mensaje=mensaje.concat(", Salon: ");
+        mensaje=mensaje.concat(", ");
         mensaje=mensaje.concat(salon.getNombre());
         mensaje=mensaje.concat(", Curso: ");
         mensaje=mensaje.concat(curso.getNombre());
@@ -112,6 +113,17 @@ public class Horario {
         mensaje=mensaje.concat(Integer.toString(salon.getCapacidad()));
         mensaje=mensaje.concat(", Inscritos curso: ");
         mensaje=mensaje.concat(Integer.toString(curso.getInscritos()));
+        if (getSalon().isAuditorio()==true){
+            mensaje=mensaje.concat(" Auditorio ");
+        }
+        else { 
+                if (getSalon().isComputadores()==true){
+                mensaje=mensaje.concat(" Sala de computadores ");
+             }
+                else{
+                    mensaje=mensaje.concat(" Salon ");
+                }
+        }
         
         return mensaje;
         
