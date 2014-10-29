@@ -17,6 +17,8 @@ public class Curso {
     private boolean auditorio;
     private boolean computadores;
     
+    public Curso(){}
+    
     public Curso(String nombre,int inscritos,int horasDia,int dias,int horasConSalon,boolean especial,boolean computadores){
         setNombre(nombre);
         setInscritos(inscritos);
