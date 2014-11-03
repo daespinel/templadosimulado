@@ -180,8 +180,7 @@ public class TempladoSimulado {
     
     public static void aceptacion(double prob){
         double r = rnd.nextDouble();
-        System.out.println("Esto es r:" + r);
-        System.out.println("Esto es prob:" + prob);
+
         if (prob > r){ 
             energia = energiaT;
         }
