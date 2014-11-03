@@ -25,9 +25,18 @@ public class TempladoSimulado {
     
     public static int numH=6; 
     public static int iteraciones=0;
-    public static double temperatura=10000.0;
+    public static double temperatura=100000.0;
     public static int energia;
     public static int energiaT;
+    
+    public static Curso swap0 = new Curso();
+    public static Curso swap1 = new Curso();
+    public static int dia;
+    public static int dia2;
+    public static int posx1;
+    public static int posx2;
+    public static int posy1;
+    public static int posy2;
     
     public static boolean todos=false;
     public static Random rnd = new Random();
@@ -63,13 +72,12 @@ public class TempladoSimulado {
         
         System.out.println("AQUI EMPIEZA TEMPLADO  Y LA TEMPERATURA ES: " + temperatura);
         
-        while (temperatura > 0){
+        while (temperatura > 0.0001){
             iteraciones = 0;
             while (iteraciones < 10000){
                 templadoS();
             }
-            double dism = evalua();
-            temperatura = temperatura - dism;
+            aceptacion(evalua()); 
             System.out.println("Energia: " + energia);
             System.out.println("Temperatura: " + temperatura );
         }
@@ -82,86 +90,103 @@ public class TempladoSimulado {
         
     public static void templadoS(){
         //Funcion de templado simulado  
-        Curso swap0 = new Curso();
-        Curso swap1 = new Curso();
-        int dia=rnd.nextInt(5);
-        int dia2=rnd.nextInt(5);
-        int posx1=rnd.nextInt(5);
-        int posx2=rnd.nextInt(5);
-        int posy1=rnd.nextInt(5);
-        int posy2=rnd.nextInt(5);
-        //do{
-            switch(dia){
+        dia=rnd.nextInt(5);
+        dia2=rnd.nextInt(5);
+        posx1=rnd.nextInt(5);
+        posx2=rnd.nextInt(5);
+        posy1=rnd.nextInt(5);
+        posy2=rnd.nextInt(5);
+        
+        switch(dia){
+            case 0:
+                swap0=horariosLunes[posx1][posy1].getCurso();
+                break;
+            case 1:
+                swap0=horariosMartes[posx1][posy1].getCurso();
+                break;
+            case 2:
+                swap0=horariosMiercoles[posx1][posy1].getCurso();
+                break;
+            case 3:
+                swap0=horariosJueves[posx1][posy1].getCurso();
+                break;
+            case 4:
+                swap0=horariosViernes[posx1][posy1].getCurso();
+                break;
+        }
+        switch(dia2){
+            case 0:
+                swap1=horariosLunes[posx2][posy2].getCurso();
+                break;
+            case 1:
+                swap1=horariosMartes[posx2][posy2].getCurso();
+                break;
+            case 2:
+                swap1=horariosMiercoles[posx2][posy2].getCurso();
+                break;
+            case 3:
+                swap1=horariosJueves[posx2][posy2].getCurso();
+                break;
+            case 4:
+                swap1=horariosViernes[posx2][posy2].getCurso();
+                break;   }
+        switch(dia){
                 case 0:
-                    swap0=horariosLunes[posx1][posy1].getCurso();
+                    horariosLunes[posx1][posy1].setCurso(swap1);
                     break;
                 case 1:
-                    swap0=horariosMartes[posx1][posy1].getCurso();
+                    horariosMartes[posx1][posy1].setCurso(swap1);
                     break;
                 case 2:
-                    swap0=horariosMiercoles[posx1][posy1].getCurso();
+                    horariosMiercoles[posx1][posy1].setCurso(swap1);
                     break;
                 case 3:
-                    swap0=horariosJueves[posx1][posy1].getCurso();
+                    horariosJueves[posx1][posy1].setCurso(swap1);
                     break;
                 case 4:
-                    swap0=horariosViernes[posx1][posy1].getCurso();
+                    horariosViernes[posx1][posy1].setCurso(swap1);
                     break;
             }
             switch(dia2){
                 case 0:
-                    swap1=horariosLunes[posx2][posy2].getCurso();
+                    horariosLunes[posx2][posy2].setCurso(swap0);
                     break;
                 case 1:
-                    swap1=horariosMartes[posx2][posy2].getCurso();
+                    horariosMartes[posx2][posy2].setCurso(swap0);
                     break;
                 case 2:
-                    swap1=horariosMiercoles[posx2][posy2].getCurso();
+                    horariosMiercoles[posx2][posy2].setCurso(swap0);
                     break;
                 case 3:
-                    swap1=horariosJueves[posx2][posy2].getCurso();
+                    horariosJueves[posx2][posy2].setCurso(swap0);
                     break;
                 case 4:
-                    swap1=horariosViernes[posx2][posy2].getCurso();
-                    break;   }
-            //}while (condicion==false);
+                    horariosViernes[posx2][posy2].setCurso(swap0);
+                    break;   
+            }   
+        energiaT = suficiencia();
+        iteraciones++;
+    }
+    
+    public static double evalua(){
+        if(energiaT < energia){
+            return 1.0;
+        }
+        else{
+            double dism= (energia-energiaT)/temperatura ;
+            return Math.exp(dism);
+        }
+    }
+    
+    public static void aceptacion(double prob){
+        double r = rnd.nextDouble();
+        System.out.println("Esto es r:" + r);
+        System.out.println("Esto es prob:" + prob);
+        if (prob > r){ 
+            energia = energiaT;
+        }
+        else{
             switch(dia){
-                    case 0:
-                        horariosLunes[posx1][posy1].setCurso(swap1);
-                        break;
-                    case 1:
-                        horariosMartes[posx1][posy1].setCurso(swap1);
-                        break;
-                    case 2:
-                        horariosMiercoles[posx1][posy1].setCurso(swap1);
-                        break;
-                    case 3:
-                        horariosJueves[posx1][posy1].setCurso(swap1);
-                        break;
-                    case 4:
-                        horariosViernes[posx1][posy1].setCurso(swap1);
-                        break;
-                }
-                switch(dia2){
-                    case 0:
-                        horariosLunes[posx2][posy2].setCurso(swap0);
-                        break;
-                    case 1:
-                        horariosMartes[posx2][posy2].setCurso(swap0);
-                        break;
-                    case 2:
-                        horariosMiercoles[posx2][posy2].setCurso(swap0);
-                        break;
-                    case 3:
-                        horariosJueves[posx2][posy2].setCurso(swap0);
-                        break;
-                    case 4:
-                        horariosViernes[posx2][posy2].setCurso(swap0);
-                        break;   
-                }   
-        energiaT = suficiencia();  
-        if (energiaT > energia){
-                switch(dia){
                     case 0:
                         horariosLunes[posx1][posy1].setCurso(swap0);
                         break;
@@ -195,24 +220,10 @@ public class TempladoSimulado {
                         horariosViernes[posx2][posy2].setCurso(swap1);
                         break;   
                 }
-        }
-
-        iteraciones++;
-        //System.out.println("Numero de iteraciones: "+ iteraciones);
+        } 
+        temperatura = temperatura * 0.995;
     }
     
-    public static double evalua(){
-        if(energiaT < energia){
-            energia = energiaT;
-            return 1.0;
-        }
-        else{
-            double dism= (energiaT-energia) ;
-            //System.out.println("dism: " + dism);
-            return Math.abs(dism/10);
-        }
-    }
-        
     public static int suficiencia(){
         int energias = 0;
         int contador;
@@ -222,7 +233,7 @@ public class TempladoSimulado {
                 Horario temp = horariosLunes[i][j];
                                 
                 if(temp.getSalon().isAuditorio() != temp.getCurso().isAuditorio() || temp.getSalon().isComputadores() != temp.getCurso().isComputadores()){
-                  energias++;   
+                  energias = energias + 2;   
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
@@ -233,27 +244,25 @@ public class TempladoSimulado {
                     }
                 }
                 if (contador >= 2){
-                    energias++;
+                    energias = energias + 3;
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
                         Horario comparador = horariosMartes[a][b];
                         if (temp.getCurso()== comparador.getCurso()){
-                            energias++;
+                            energias = energias + 1;
                         }
                     }
                 }
             }
         }
-        //System.out.println("ENERGIAS LUNES: " + energias);
-        //contador =  0;
         for(int i=0;i<6;i++){
             for (int j=0;j<6;j++){
                 contador=0;
                 Horario temp = horariosMartes[i][j];
                                 
                 if(temp.getSalon().isAuditorio() != temp.getCurso().isAuditorio() || temp.getSalon().isComputadores() != temp.getCurso().isComputadores()){
-                  energias++;   
+                  energias = energias + 2;   
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
@@ -264,27 +273,25 @@ public class TempladoSimulado {
                     }
                 }
                 if (contador >= 2){
-                    energias++;
+                    energias = energias + 3;
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
                         Horario comparador = horariosMiercoles[a][b];
                         if (temp.getCurso()== comparador.getCurso()){
-                            energias++;
+                            energias = energias + 1;
                         }
                     }
                 }
             }
         }
-        //System.out.println("ENERGIAS MARTES: " + energias);
-        //contador =  0;
         for(int i=0;i<6;i++){
             for (int j=0;j<6;j++){
                 contador=0;
                 Horario temp = horariosMiercoles[i][j];
                                 
                 if(temp.getSalon().isAuditorio() != temp.getCurso().isAuditorio() || temp.getSalon().isComputadores() != temp.getCurso().isComputadores()){
-                  energias++;   
+                  energias = energias + 2;   
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
@@ -295,27 +302,25 @@ public class TempladoSimulado {
                     }
                 }
                 if (contador >= 2){
-                    energias++;
+                    energias = energias + 3;
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
                         Horario comparador = horariosJueves[a][b];
                         if (temp.getCurso()== comparador.getCurso()){
-                            energias++;
+                            energias = energias + 1;
                         }
                     }
                 }
             }
         }
-        //System.out.println("ENERGIAS MIERCOLES: " + energias);
-        //contador =  0;
         for(int i=0;i<6;i++){
             for (int j=0;j<6;j++){
                 contador=0;
                 Horario temp = horariosJueves[i][j];
                                 
                 if(temp.getSalon().isAuditorio() != temp.getCurso().isAuditorio() || temp.getSalon().isComputadores() != temp.getCurso().isComputadores()){
-                  energias++;   
+                  energias = energias + 2;   
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
@@ -326,27 +331,25 @@ public class TempladoSimulado {
                     }
                 }
                 if (contador >= 2){
-                    energias++;
+                    energias = energias + 3;
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
                         Horario comparador = horariosViernes[a][b];
                         if (temp.getCurso()== comparador.getCurso()){
-                            energias++;
+                            energias = energias + 1;
                         }
                     }
                 }
             }
         }
-        //System.out.println("ENERGIAS JUEVES: " + energias);
-        //contador =  0;
         for(int i=0;i<6;i++){
             for (int j=0;j<6;j++){
                 contador=0;
                 Horario temp = horariosViernes[i][j];
                                 
                 if(temp.getSalon().isAuditorio() != temp.getCurso().isAuditorio() || temp.getSalon().isComputadores() != temp.getCurso().isComputadores()){
-                  energias++;   
+                  energias = energias + 2;   
                 }
                 for(int a=0;a<6;a++){
                     for (int b=0;b<6;b++){
@@ -357,15 +360,13 @@ public class TempladoSimulado {
                     }
                 }
                 if (contador >= 2){
-                    energias++;
+                    energias = energias + 3;
                 }
             }
         }
-        //System.out.println("ENERGIAS VIERNES: " + energias);
         return energias;
     }
-    
-    
+   
     public static void iniciaCursosYEdificio(){
            
         //Cursos en salones, con distribución normal(35,5) para inscritos
